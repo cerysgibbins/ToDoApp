@@ -7,12 +7,24 @@ use App\Models\ToDo;
 
 class ToDoRepository 
 {
+    /** @var ToDo  */
+    private $toDo;
+
+    /**
+     * ToDoRepository constructor.
+     * @param ToDo $toDo
+     */
+    public function __construct(ToDo $toDo)
+    {
+        $this->toDo = $toDo;
+    }
+
     /**
      * @return array
      */
     public function getCompleteToDos()
     {
-        return Todo::where('status', Todo::TODO_STATUS_COMPLETE)->get();
+        return $this->toDo->where('status', Todo::TODO_STATUS_COMPLETE)->get();
     }
 
     /**
@@ -20,7 +32,7 @@ class ToDoRepository
      */
     public function getUnCompleteToDos()
     {
-        return Todo::where('status', Todo::TODO_STATUS_UNCOMPLETE)->get();
+        return $this->toDo->where('status', Todo::TODO_STATUS_UNCOMPLETE)->get();
     }
 
     /**
@@ -29,7 +41,7 @@ class ToDoRepository
      */
     public function create($data)
     {
-        Todo::create($data);
+        $this->toDo->create($data);
     }
 
     /**
@@ -38,7 +50,7 @@ class ToDoRepository
      */
     public function findByID($id)
     {
-        return Todo::find($id);
+        return $this->toDo->find($id);
     }
 
     /**
